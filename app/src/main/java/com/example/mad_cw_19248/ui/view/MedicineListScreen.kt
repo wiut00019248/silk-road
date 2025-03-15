@@ -49,8 +49,7 @@ fun MedicineListScreen(
 
     if (medicines.isEmpty()) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
@@ -82,17 +81,9 @@ fun MedicineCard(medicine: Medicine) {
                     .weight(2f)
                     .padding(8.dp)
             ) {
-                Text(
-                    text = medicine.name,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
+                Text(text = medicine.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
-                Text(
-                    text = "${medicine.price} soms",
-                    fontSize = 16.sp,
-                    color = Color.Gray
-                )
+                Text(text = "${medicine.price} soms", fontSize = 16.sp, color = Color.Gray)
 
                 Button(
                     onClick = { /* Handle more */ },

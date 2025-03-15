@@ -9,7 +9,7 @@ import com.example.mad_cw_19248.data.api.RetrofitInstance
 import com.example.mad_cw_19248.data.models.Medicine
 import kotlinx.coroutines.launch
 
-class MedicineViewModel: ViewModel() {
+class MedicineViewModel : ViewModel() {
     private val _medicines = mutableStateOf<List<Medicine>>(emptyList())
     val medicines: State<List<Medicine>> = _medicines
 

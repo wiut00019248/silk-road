@@ -29,11 +29,9 @@ fun HeaderScreen() {
             .height(70.dp)
             .clip(
                 RoundedCornerShape(
-                    bottomStart = 10.dp,
-                    bottomEnd = 10.dp
+                    bottomStart = 10.dp, bottomEnd = 10.dp
                 )
-            ),
-        contentAlignment = Alignment.Center
+            ), contentAlignment = Alignment.Center
     ) {
         Text(
             text = stringResource(id = R.string.header),
