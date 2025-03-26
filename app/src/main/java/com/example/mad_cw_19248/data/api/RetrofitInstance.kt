@@ -28,9 +28,11 @@ object RetrofitInstance {
         .setDateFormat("yyyy-MM-dd HH:mm:ss")
         .create()
 
+    private const val BASE_URL = "https://wiutmadcw.uz/api/v1/"
+
     val api: ApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("https://wiutmadcw.uz/api/v1/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

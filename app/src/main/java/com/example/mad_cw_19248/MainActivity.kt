@@ -10,9 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mad_cw_19248.ui.theme.MAD_CW_19248Theme
-import com.example.mad_cw_19248.ui.view.HeaderScreen
-import com.example.mad_cw_19248.ui.view.MedicineListScreen
+import com.example.mad_cw_19248.ui.screens.MedicineListScreen
+import com.example.mad_cw_19248.ui.components.Header
+import com.example.mad_cw_19248.ui.screens.AddMedicineScreen
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -21,6 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MAD_CW_19248Theme {
+                val navController = rememberNavController()
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { paddingValues ->
@@ -29,8 +34,18 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(paddingValues)
                     ) {
-                        HeaderScreen()
-                        MedicineListScreen()
+                        Header()
+                        NavHost(
+                            navController = navController,
+                            startDestination = "home"
+                        ) {
+                            composable("home") {
+                                MedicineListScreen(navController)
+                            }
+                            composable("add") {
+                                AddMedicineScreen(navController)
+                            }
+                        }
                     }
                 }
             }

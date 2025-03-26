@@ -1,12 +1,9 @@
-package com.example.mad_cw_19248.ui.view
+package com.example.mad_cw_19248.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.mad_cw_19248.R
 
 @Composable
-fun HeaderScreen() {
+fun Header() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
