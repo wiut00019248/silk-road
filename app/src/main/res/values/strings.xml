@@ -2,4 +2,6 @@
     <string name="app_name">MAD_CW_19248</string>
     <string name="more">More</string>
     <string name="header">Silk Road</string>
+    <string name="currency">soms</string>
+    <string name="add_medicine">Add New Medicine</string>
 </resources>

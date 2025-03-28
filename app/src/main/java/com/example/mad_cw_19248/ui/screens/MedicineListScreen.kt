@@ -1,6 +1,8 @@
 package com.example.mad_cw_19248.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,12 +16,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Maximize
+import androidx.compose.material.icons.filled.Minimize
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,6 +35,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -38,7 +47,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -59,9 +70,16 @@ fun MedicineListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("add") },
-                modifier = Modifier.padding(10.dp).offset(y = 20.dp)
+                modifier = Modifier
+                    .padding(10.dp)
+                    .offset(y = 20.dp),
+                containerColor = colorResource(id = R.color.blue)
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Medicine")
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Medicine",
+                    tint = Color.White,
+                )
             }
         }
     ) { paddingValues ->
@@ -90,6 +108,7 @@ fun MedicineListScreen(
 
 @Composable
 fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
+    var quantity by remember { mutableStateOf(medicine.quantity) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     if (showDeleteDialog) {
@@ -119,9 +138,11 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .border(1.dp, Color.Blue, RoundedCornerShape(8.dp))
+            .border(2.dp, colorResource(id = R.color.blue), RoundedCornerShape(8.dp))
     ) {
-        Row {
+        Row(
+            modifier = Modifier.padding(10.dp)
+        ) {
             Column(
                 modifier = Modifier
                     .weight(2f)
@@ -129,14 +150,14 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
             ) {
                 Text(text = medicine.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
-                Text(text = "${medicine.price} soms", fontSize = 16.sp, color = Color.Gray)
+                Text(text = "${medicine.price} ${stringResource(R.string.currency)}", fontSize = 16.sp, color = Color.Gray)
 
                 Button(
                     onClick = { /* Handle more */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(top = 8.dp)
                 ) {
                     Text(stringResource(R.string.more), color = Color.White, fontSize = 16.sp)
@@ -152,35 +173,60 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.SpaceAround,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    IconButton(onClick = { /* Handle subtract */ }) {
-                        Text("-", fontSize = 24.sp, color = Color.Blue)
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colorResource(id = R.color.blue))
+                            .clickable { /*TODO*/ }
+                            .padding(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Remove,
+                            contentDescription = "Remove",
+                            tint = Color.White,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
 
-                    Text("${medicine.quantity}", fontSize = 18.sp)
+                    Text("${medicine.quantity}", fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
-                    IconButton(onClick = { /* Handle add */ }) {
-                        Text("+", fontSize = 24.sp, color = Color.Blue)
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(colorResource(id = R.color.blue))
+                            .clickable { /*TODO*/ }
+                            .padding(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = "Add",
+                            tint = Color.White,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(27.dp))
 
-                IconButton(
-                    onClick = { showDeleteDialog = true },
-                    modifier = Modifier.align(Alignment.End)
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.Red)
+                        .clickable { showDeleteDialog = true }
+                        .padding(8.dp)
+                        .align(Alignment.End)
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
-                        tint = Color.Red,
-                        modifier = Modifier.size(32.dp)
+                        tint = Color.White,
+                        modifier = Modifier.size(25.dp)
                     )
                 }
             }
-
         }
     }
 }

@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,19 +24,18 @@ fun Header() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Blue)
-            .height(70.dp)
-            .clip(
-                RoundedCornerShape(
-                    bottomStart = 10.dp, bottomEnd = 10.dp
-                )
-            ), contentAlignment = Alignment.Center
+            .background(
+                color = colorResource(id = R.color.blue),
+                shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+            )
+            .height(70.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = stringResource(id = R.string.header),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
         )
     }
 }

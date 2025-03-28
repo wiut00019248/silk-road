@@ -1,11 +1,13 @@
 package com.example.mad_cw_19248.ui.views
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
 import com.example.mad_cw_19248.data.api.RetrofitInstance
 import com.example.mad_cw_19248.data.models.Medicine
+import com.example.mad_cw_19248.data.models.MedicineRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +25,16 @@ class MedicineViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _medicines.value = RetrofitInstance.api.getAllMedicines().data
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun addNewMedicine(medicine: MedicineRequest) {
+        viewModelScope.launch {
+            try {
+                RetrofitInstance.api.addMedicine(medicine)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
