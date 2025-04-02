@@ -38,7 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mad_cw_19248.R
-import com.example.mad_cw_19248.data.models.MedicineRequest
+import com.example.mad_cw_19248.data.api.Request
+import com.example.mad_cw_19248.data.models.Medicine
 import com.example.mad_cw_19248.ui.views.MedicineViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -184,19 +185,17 @@ fun AddMedicineScreen(
 
             Button(
                 onClick = {
-                    val medicine = MedicineRequest(
+                    viewModel.addNewMedicine(Request(
                         name = name,
-                        dosage = dosage.toDoubleOrNull() ?: 0.0,
+                        description = description,
                         ingredients = ingredients,
                         manufacturer = manufacturer,
+                        quantity = quantity.toInt(),
                         serialNumber = serialNumber,
                         price = price,
-                        quantity = quantity.toIntOrNull() ?: 0,
                         expirationDate = expiryDate ?: Date(),
-                        description = description
-                    )
-
-                    viewModel.addNewMedicine(medicine)
+                        dosage = dosage.toDouble()
+                    ))
                     navController.navigateUp()
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue)),

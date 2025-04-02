@@ -11,17 +11,18 @@ object RetrofitInstance {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+
     private val client = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val original = chain.request()
             val originalUrl = original.url
 
-            val newUrl = originalUrl.newBuilder()
+            val updatedUrl = originalUrl.newBuilder()
                 .addQueryParameter("student_id", "00019248")
                 .build()
 
             val request = original.newBuilder()
-                .url(newUrl)
+                .url(updatedUrl)
                 .build()
 
             chain.proceed(request)
@@ -29,11 +30,8 @@ object RetrofitInstance {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    private val gson: Gson = GsonBuilder()
-        .setDateFormat("yyyy-MM-dd HH:mm:ss")
-        .create()
-
-    private const val BASE_URL = "https://wiutmadcw.uz/api/v1/"
+    private val BASE_URL = "https://wiutmadcw.uz/api/v1/"
+    private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()
 
     val api: ApiService by lazy {
         Retrofit.Builder()

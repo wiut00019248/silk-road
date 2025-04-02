@@ -16,17 +16,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Maximize
-import androidx.compose.material.icons.filled.Minimize
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -34,8 +29,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -56,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mad_cw_19248.R
+import com.example.mad_cw_19248.data.api.Request
 import com.example.mad_cw_19248.data.models.Medicine
 import com.example.mad_cw_19248.ui.views.MedicineViewModel
 
@@ -153,7 +147,7 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
                 Text(text = "${medicine.price} ${stringResource(R.string.currency)}", fontSize = 16.sp, color = Color.Gray)
 
                 Button(
-                    onClick = { /* Handle more */ },
+                    onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue)),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier
@@ -180,7 +174,20 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .background(colorResource(id = R.color.blue))
-                            .clickable { /*TODO*/ }
+                            .clickable {
+                                quantity--;
+                                viewModel.updateMedicine(medicine.id, Request(
+                                    name = medicine.name,
+                                    description = medicine.description,
+                                    ingredients = medicine.ingredients,
+                                    manufacturer = medicine.manufacturer,
+                                    quantity = quantity,
+                                    serialNumber = medicine.serialNumber,
+                                    price = medicine.price,
+                                    expirationDate = medicine.expirationDate,
+                                    dosage = medicine.dosage
+                                ))
+                            }
                             .padding(8.dp)
                     ) {
                         Icon(
@@ -191,13 +198,26 @@ fun MedicineCard(medicine: Medicine, viewModel: MedicineViewModel) {
                         )
                     }
 
-                    Text("${medicine.quantity}", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+                    Text("$quantity", fontSize = 18.sp, fontWeight = FontWeight.Medium)
 
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .background(colorResource(id = R.color.blue))
-                            .clickable { /*TODO*/ }
+                            .clickable {
+                                quantity++;
+                                viewModel.updateMedicine(medicine.id, Request(
+                                    name = medicine.name,
+                                    description = medicine.description,
+                                    ingredients = medicine.ingredients,
+                                    manufacturer = medicine.manufacturer,
+                                    quantity = quantity,
+                                    serialNumber = medicine.serialNumber,
+                                    price = medicine.price,
+                                    expirationDate = medicine.expirationDate,
+                                    dosage = medicine.dosage
+                                ))
+                            }
                             .padding(8.dp)
                     ) {
                         Icon(
